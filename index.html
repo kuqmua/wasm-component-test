@@ -24,7 +24,7 @@
             imports: {}
         };
 
-        fetch('/target/wasm32-unknown-unknown/debug/rust_wasm.wasm').then(response =>
+        fetch('/target/wasm32-unknown-unknown/debug/wasm_component_test.wasm').then(response =>
             response.arrayBuffer()
         ).then(bytes => WebAssembly.instantiate(bytes, importObject)).then(results => {
             instance = results.instance;
