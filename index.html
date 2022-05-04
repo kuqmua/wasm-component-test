@@ -17,19 +17,26 @@
     </style>
 </head>
 <body>
-    <h1 id="container"></h1>
+    <button onclick="changeColor()" id="container"></button>
 
     <script>
         var importObject = {
             imports: {}
         };
+        var incr = 0;
+        document.getElementById("container").textContent = incr;
 
-        fetch('/target/wasm32-unknown-unknown/debug/wasm_component_test.wasm').then(response =>
-            response.arrayBuffer()
-        ).then(bytes => WebAssembly.instantiate(bytes, importObject)).then(results => {
-            instance = results.instance;
-            document.getElementById("container").textContent = instance.exports.sum(4,7);
-        }).catch(console.error);
+        function changeColor() {
+            console.log('kekw');
+            fetch('/target/wasm32-unknown-unknown/debug/wasm_component_test.wasm').then(response =>
+               response.arrayBuffer()
+               ).then(bytes => WebAssembly.instantiate(bytes, importObject)).then(results => {
+               instance = results.instance;
+               let result = instance.exports.sum(incr,1);
+               document.getElementById("container").textContent = result;
+               incr = result;
+            }).catch(console.error);
+        }
     </script>
     
 </body>
