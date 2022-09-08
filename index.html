@@ -20,19 +20,17 @@
     <button onclick="changeColor()" id="container"></button>
 
     <script>
-        var importObject = {
-            imports: {}
-        };
         var incr = 0;
         document.getElementById("container").textContent = incr;
 
         function changeColor() {
             console.log('kekw');
-            fetch('/target/wasm32-unknown-unknown/debug/wasm_component_test.wasm').then(response =>
+            fetch('/target/wasm32-unknown-unknown/release/wasm_component_test.wasm').then(response =>
                response.arrayBuffer()
-               ).then(bytes => WebAssembly.instantiate(bytes, importObject)).then(results => {
+               ).then(bytes => WebAssembly.instantiate(bytes, {})).then(results => {
                instance = results.instance;
                let result = instance.exports.sum(incr,1);
+               console.log('result', result);
                document.getElementById("container").textContent = result;
                incr = result;
             }).catch(console.error);
